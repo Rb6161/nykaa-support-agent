@@ -1,0 +1,51 @@
+$ python.exe demo_governance.py
+
+##### APPLICATION LAYER: least autonomy (only the Lookup Agent may call check_order_status) #####
+actual tool wiring in the crew: {"Retrieval Agent": ["rag_lookup"], "Lookup Agent": ["check_order_status"], "Response Composer": []}
+attempt to wire the tool to 'Retrieval Agent' BLOCKED -> Least-autonomy violation: agent 'Retrieval Agent' may not use tool 'check_order_status' (allowed: ['Lookup Agent'])
+attempt to wire the tool to 'Response Composer' BLOCKED -> Least-autonomy violation: agent 'Response Composer' may not use tool 'check_order_status' (allowed: ['Lookup Agent'])
+Guard: governance.TOOL_ACL lists the roles allowed per tool, and crew.make_agent() calls authorize_tool() for every tool BEFORE an Agent object is created, so a mis-wired crew cannot even be constructed. The tool is also simply never passed to any other agent in build_crew().
+
+##### APPLICATION LAYER: risk classification #####
+Risk level: Medium
+This system is a customer-support assistant that answers policy questions and reads order status, which falls in the Medium tier (customer support tickets). It is not Low, because it touches customer order records and receives phone numbers and card last-4 digits, which are personal data. It is not High, because it handles no medical data, makes no hiring or credit decisions, cannot move money (it only quotes refund policy), and has read-only access to fabricated order data. Its answers are grounded in a fixed knowledge base, reviewed by a second agent team, and low-confidence cases are refused or escalated to a human.
+
+##### RUNTIME LAYER: per-request token/cost budget cap #####
+cap = 1000 tokens
+normal request  : refused=False, estimated_tokens=708
+oversized request: refused=True, estimated_tokens=5100, reason=budget_exceeded:Estimated 5100 tokens exceeds the per-request cap of 1000.
+answer: Your request is too large for the per-request token budget, so it was rejected.
+budget detail: {'estimated_tokens': 702, 'cap': 1000, 'estimated_cost_usd': 0.000421}
+
+##### RUNTIME LAYER: response cache (keyed by normalised query text) #####
+BEFORE: counters = {'generation_calls': 0, 'retrieval_calls': 0} | cache = {'hits': 0, 'misses': 0, 'entries': 0}
+CALL 1 (36.4 ms): cache_hit=False | counters = {'generation_calls': 1, 'retrieval_calls': 1} | cache = {'hits': 0, 'misses': 1, 'entries': 1}
+CALL 2 (0.4 ms): cache_hit=True | counters = {'generation_calls': 1, 'retrieval_calls': 1} | cache = {'hits': 1, 'misses': 1, 'entries': 1}
+AFTER: the repeated (normalised-identical) query caused 0 extra generation calls and 0 extra retrievals; 36.4 ms -> 0.4 ms
+
+-- same effect end to end through the crew (tool-level cache hit) --
+request 1: cache_hit=False, latency=214.15 ms
+request 2: cache_hit=True, latency=161.71 ms
+
+OK: least autonomy enforced, risk classified, oversized request rejected, cache hit demonstrated.
+
+--- stderr (warnings are expected, e.g. LangChain deprecation) ---
+<repo>\pipeline.py:34: LangChainDeprecationWarning: RunnableWithMessageHistory is deprecated. Use LangGraph's built-in persistence instead.
+  self.memory = ConversationMemory(self._turn)
+<repo>\memory.py:25: LangChainDeprecationWarning: The class `InMemoryChatMessageHistory` was deprecated in LangChain 1.6.4 and will be removed in 2.0.0 See the short-term memory documentation for recommended alternatives: https://docs.langchain.com/oss/python/langchain/short-term-memory
+  return self._histories.setdefault(session_id, InMemoryChatMessageHistory())
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4542.87it/s]
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.

@@ -1,0 +1,39 @@
+$ python.exe calibrate.py
+
+
+=== collection: fixed ===
+in-scope top-1 cosine similarity:
+  0.7122  What is the time limit for returning beauty products?
+  0.6634  How long until my cash on delivery refund reaches my bank?
+  0.6584  Is there a charge to cancel an order that has not shipped?
+  0.6995  How do reward points work at checkout?
+  0.6063  What happens if a courier cannot deliver to my pin code?
+out-of-scope top-1 cosine similarity:
+  0.0562  What is the capital of France?
+  0.0635  How do I bake sourdough bread?
+  0.0868  Explain how photosynthesis works
+  0.0986  Which python web framework is the fastest?
+cluster edges: min(in-scope)=0.6063  max(out-of-scope)=0.0986  separated=True
+CHOSEN THRESHOLD = (0.6063 + 0.0986) / 2 = 0.3524
+
+=== collection: sentence ===
+in-scope top-1 cosine similarity:
+  0.7748  What is the time limit for returning beauty products?
+  0.7339  How long until my cash on delivery refund reaches my bank?
+  0.7136  Is there a charge to cancel an order that has not shipped?
+  0.7089  How do reward points work at checkout?
+  0.6294  What happens if a courier cannot deliver to my pin code?
+out-of-scope top-1 cosine similarity:
+  0.1429  What is the capital of France?
+  0.1012  How do I bake sourdough bread?
+  0.0988  Explain how photosynthesis works
+  0.1642  Which python web framework is the fastest?
+cluster edges: min(in-scope)=0.6294  max(out-of-scope)=0.1642  separated=True
+CHOSEN THRESHOLD = (0.6294 + 0.1642) / 2 = 0.3968
+
+wrote calibration.json
+
+--- stderr (warnings are expected, e.g. LangChain deprecation) ---
+
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4396.86it/s]

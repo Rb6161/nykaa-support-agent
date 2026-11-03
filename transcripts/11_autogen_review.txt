@@ -1,0 +1,36 @@
+$ python.exe demo_review.py
+
+##### SAMPLE QUERY 1: How long does a COD refund take? #####
+retrieved context:
+  - Once the returned item passes quality check, the refund is released within 5 to 7 working days.
+  - Prepaid cancellations are refunded to the original payment method within 5 to 7 working days.
+  - If the bank details are wrong, the refund is held until the customer corrects them.
+  - Cash on Delivery refund timelines.
+
+draft  : Once the returned item passes quality check, the refund is released within 5 to 7 working days. Prepaid cancellations are refunded to the original payment method within 5 to 7 working days. 
+verdict: {
+  "approved": true,
+  "final_answer": "Once the returned item passes quality check, the refund is released within 5 to 7 working days. Prepaid cancellations are refunded to the original payment method within 5 to 7 working days.",
+  "reason": "All claims are supported by the retrieved context; approved unchanged."
+}
+
+##### SAMPLE QUERY 2: What is the return window for beauty products? #####
+retrieved context:
+  - Beauty and personal-care items can be returned within 15 days of delivery, provided the seal is intact and the product is unused.
+  - Home products and small accessories can be returned within 10 days.
+  - Apparel, footwear and beauty products have no warranty, but manufacturing defects reported within the return window are covered by a replacement or refund.
+  - Apparel and footwear have a 15-day return window, but items must carry their original tags and show no signs of wear.
+
+draft (with injected ungrounded claim): Beauty and personal-care items can be returned within 15 days of delivery, provided the seal is intact and the product is unused. Home products and small accessories can be returned within 10 days. Every return also earns a free Nykaa gift hamper worth 5000 rupees. 
+verdict: {
+  "approved": false,
+  "final_answer": "Beauty and personal-care items can be returned within 15 days of delivery, provided the seal is intact and the product is unused. Home products and small accessories can be returned within 10 days.",
+  "reason": "Removed 1 ungrounded sentence(s): Every return also earns a free Nykaa gift hamper worth 5000 rupees."
+}
+
+OK: the review stage approved query 1's draft unchanged and revised query 2's draft (ungrounded claim removed).
+
+--- stderr (warnings are expected, e.g. LangChain deprecation) ---
+
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4071.99it/s]

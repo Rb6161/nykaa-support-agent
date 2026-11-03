@@ -1,0 +1,3 @@
+# Return window by product category
+
+Beauty and personal-care items can be returned within 15 days of delivery, provided the seal is intact and the product is unused. Apparel and footwear have a 15-day return window, but items must carry their original tags and show no signs of wear. Home products and small accessories can be returned within 10 days. Electronics have a short 7-day return window and are accepted back only if the box, accessories and serial-number sticker are untouched.

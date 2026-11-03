@@ -1,0 +1,63 @@
+$ python.exe demo_memory.py
+
+##### CONVERSATION A (session 'multi-turn'): order id given in turn 1 only #####
+
+USER      : Hi, my order id is NYK-0005. Can you check it?
+ASSISTANT : Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so escalation is recommended. An order is created only after a payment succeeds, so a failed payment does not produce an order ID. The claim requires the order ID and clear details of the damage, and the packaging must be kept.
+            (tools=['rag_lookup', 'check_order_status'], refused=False, reason=None)
+
+USER      : What is the status of my order?
+ASSISTANT : Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so escalation is recommended. Placed means the order is confirmed and is being packed, and it has not yet been handed to the courier. A shipment is considered delayed when it is more than 2 days past its promised delivery date, and the customer can then ask for a status check.
+            (tools=['rag_lookup', 'check_order_status'], refused=False, reason=None)
+
+USER      : How long does a COD refund take?
+ASSISTANT : Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so escalation is recommended. Once the returned item passes quality check, the refund is released within 5 to 7 working days. Prepaid cancellations are refunded to the original payment method within 5 to 7 working days.
+            (tools=['rag_lookup', 'check_order_status'], refused=False, reason=None)
+
+USER      : Should it be escalated?
+ASSISTANT : Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so escalation is recommended.
+            (tools=['rag_lookup', 'check_order_status'], refused=False, reason=None)
+
+stored history for session 'multi-turn':
+   human: Hi, my order id is NYK-0005. Can you check it?
+   ai: Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so es
+   human: What is the status of my order?
+   ai: Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so es
+   human: How long does a COD refund take?
+   ai: Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so es
+   human: Should it be escalated?
+   ai: Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so es
+
+##### CONVERSATION B (fresh session 'fresh'): same follow-up, no earlier turns #####
+
+USER      : What is the status of my order?
+ASSISTANT : Please share your order id (for example NYK-0012) so I can check it.
+            (tools=[], refused=True, reason=missing_order_id)
+
+stored history for session 'fresh': 2 messages (only this turn)
+
+OK: state carried across turns in conversation A and correctly absent in fresh conversation B.
+
+--- stderr (warnings are expected, e.g. LangChain deprecation) ---
+0%|          | 0/103 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4179.86it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.

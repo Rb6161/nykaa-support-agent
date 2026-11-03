@@ -1,0 +1,125 @@
+$ python.exe demo_crew.py
+
+
+=== Query 1: policy question -> RAG tool ===
+question : How long does a COD refund take?
+order_id : None
+tools actually invoked: ['rag_lookup']
+tool call log: [{"tool": "rag_lookup", "input": "How long does a COD refund take?", "cache_hit": false}]
+validated CrewAnswer: {
+  "answer": "Once the returned item passes quality check, the refund is released within 5 to 7 working days. Prepaid cancellations are refunded to the original payment method within 5 to 7 working days.",
+  "sources": [
+    "02_cod_refund",
+    "06_cancellation"
+  ],
+  "grounded": true,
+  "used_tools": [
+    "rag_lookup"
+  ],
+  "order": null,
+  "order_not_found": false,
+  "context_snippets": [
+    "Once the returned item passes quality check, the refund is released within 5 to 7 working days.",
+    "Prepaid cancellations are refunded to the original payment method within 5 to 7 working days.",
+    "If the bank details are wrong, the refund is held until the customer corrects them.",
+    "Cash on Delivery refund timelines."
+  ]
+}
+
+=== Query 2: order question -> order lookup tool (+ RAG) ===
+question : Where is my order and what is its status?
+order_id : NYK-0001
+tools actually invoked: ['rag_lookup', 'check_order_status']
+tool call log: [{"tool": "rag_lookup", "input": "Where is my order and what is its status?", "cache_hit": false}, {"tool": "check_order_status", "input": "NYK-0001", "found": true}]
+validated CrewAnswer: {
+  "answer": "Order NYK-0001 is currently Shipped, with an order value of INR 1888; its escalation score is 0.19, so no escalation is needed right now. Placed means the order is confirmed and is being packed, and it has not yet been handed to the courier. An exchange is free for the first request on an order.",
+  "sources": [
+    "13_order_status_meanings",
+    "06_cancellation",
+    "09_size_exchange"
+  ],
+  "grounded": true,
+  "used_tools": [
+    "rag_lookup",
+    "check_order_status"
+  ],
+  "order": {
+    "record_id": "NYK-0001",
+    "status": "Shipped",
+    "order_value_inr": 1888,
+    "escalation_score": 0.1867,
+    "escalation_recommended": false,
+    "category": "Beauty",
+    "delayed_shipment": false,
+    "days_since_created": 14
+  },
+  "order_not_found": false,
+  "context_snippets": [
+    "Order status meanings.",
+    "Placed means the order is confirmed and is being packed, and it has not yet been handed to the courier.",
+    "Order-cancellation policy.",
+    "An exchange is free for the first request on an order.",
+    "Order NYK-0001 is currently Shipped, with an order value of INR 1888; its escalation score is 0.19, so no escalation is needed right now."
+  ]
+}
+
+=== Query 3: order flagged for escalation ===
+question : Please check this order's status.
+order_id : NYK-0005
+tools actually invoked: ['rag_lookup', 'check_order_status']
+tool call log: [{"tool": "rag_lookup", "input": "Please check this order's status.", "cache_hit": false}, {"tool": "check_order_status", "input": "NYK-0005", "found": true}]
+validated CrewAnswer: {
+  "answer": "Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so escalation is recommended. An exchange is free for the first request on an order. Placed means the order is confirmed and is being packed, and it has not yet been handed to the courier.",
+  "sources": [
+    "13_order_status_meanings",
+    "06_cancellation",
+    "09_size_exchange"
+  ],
+  "grounded": true,
+  "used_tools": [
+    "rag_lookup",
+    "check_order_status"
+  ],
+  "order": {
+    "record_id": "NYK-0005",
+    "status": "Returned",
+    "order_value_inr": 4267,
+    "escalation_score": 0.3867,
+    "escalation_recommended": true,
+    "category": "Apparel",
+    "delayed_shipment": false,
+    "days_since_created": 29
+  },
+  "order_not_found": false,
+  "context_snippets": [
+    "Order status meanings.",
+    "Order-cancellation policy.",
+    "An exchange is free for the first request on an order.",
+    "Placed means the order is confirmed and is being packed, and it has not yet been handed to the courier.",
+    "Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so escalation is recommended."
+  ]
+}
+
+=== schema enforcement ===
+a malformed crew response is rejected by the schema: Input should be a valid boolean, unable to interpret input
+
+OK: both tools were invoked on different queries and every response validated against CrewAnswer.
+
+--- stderr (warnings are expected, e.g. LangChain deprecation) ---
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4057.68it/s]
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.

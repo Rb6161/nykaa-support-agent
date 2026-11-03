@@ -1,0 +1,33 @@
+{
+  "tool_wiring": {
+    "Retrieval Agent": [
+      "rag_lookup"
+    ],
+    "Lookup Agent": [
+      "check_order_status"
+    ],
+    "Response Composer": []
+  },
+  "budget": {
+    "cap": 1000,
+    "normal_tokens": 708,
+    "oversized_tokens": 5100
+  },
+  "cache": {
+    "first_ms": 36.45,
+    "second_ms": 0.41,
+    "counters_after_first": {
+      "generation_calls": 1,
+      "retrieval_calls": 1
+    },
+    "counters_after_second": {
+      "generation_calls": 1,
+      "retrieval_calls": 1
+    },
+    "stats": {
+      "hits": 1,
+      "misses": 1,
+      "entries": 1
+    }
+  }
+}

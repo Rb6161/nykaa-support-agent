@@ -1,0 +1,30 @@
+$ python.exe orders.py
+
+{
+  "formula": "0.6*delayed_shipment + 0.4*(days_since_created/30)",
+  "threshold": 0.3733,
+  "threshold_percentile_of_scores": 80,
+  "p80_days_since_created": 23.0,
+  "flagged_orders": 52,
+  "flagged_pct": 21.67,
+  "delayed_orders_flagged": 38,
+  "delayed_orders_total": 38,
+  "max_score_if_not_delayed": 0.4
+}
+{
+  "record_id": "NYK-0001",
+  "found": true,
+  "status": "Shipped",
+  "order_value_inr": 1888,
+  "escalation_score": 0.1867,
+  "escalation_recommended": false,
+  "escalation_threshold": 0.3733,
+  "category": "Beauty",
+  "delayed_shipment": false,
+  "days_since_created": 14
+}
+{
+  "record_id": "NYK-9999",
+  "found": false,
+  "error": "No order found with id NYK-9999."
+}

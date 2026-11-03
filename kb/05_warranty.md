@@ -1,0 +1,3 @@
+# Warranty terms by category
+
+Electronics such as hair dryers, trimmers and straighteners carry a manufacturer warranty of 6 to 12 months, as printed on the product page and invoice. Home appliances and decor with electrical parts have a 6-month warranty. Apparel, footwear and beauty products have no warranty, but manufacturing defects reported within the return window are covered by a replacement or refund. Warranty claims need the invoice and the product serial number.

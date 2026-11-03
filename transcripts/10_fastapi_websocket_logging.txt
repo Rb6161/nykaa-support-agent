@@ -1,0 +1,60 @@
+$ python.exe demo_api.py
+
+GET /health -> {'status': 'ok', 'mock_llm': True, 'strategy': 'sentence'}
+
+POST /ask -> 200 {
+  "trace_id": "680e063451db",
+  "answer": "Once the returned item passes quality check, the refund is released within 5 to 7 working days. Prepaid cancellations are refunded to the original payment method within 5 to 7 working days.",
+  "sources": [
+    "02_cod_refund",
+    "06_cancellation"
+  ],
+  "grounded": true,
+  "cache_hit": false
+}
+
+POST /ask (with phone number) -> 200 pii_masked = ['phone'] | answer: Order NYK-0003 is currently Placed, with an order value of INR 4724; its escalation score is 0.08, so no escalation is needed right now. Placed means the order is confirmed and is being packed, and it has not yet been handed to the courier. Once the order is Shipped, it can no longer be cancelled, and the customer should refuse delivery or raise a return after receiving it.
+
+POST /ask (oversized) -> 413 {'detail': {'error': 'request exceeds token budget', 'trace_id': '03985933147b'}}
+POST /ask (invalid body) -> 422 (Pydantic validation)
+
+POST /add-document -> 200 {'trace_id': 'd6dd8115d828', 'doc_id': 'added_gift_card_policy', 'chunks_fixed': 1, 'chunks_sentence': 3}
+ask about the new document -> Gift cards are valid for 12 months from the date of purchase. Gift wrapping can be added at checkout for a small fee and is not refundable after the order is packed. | sources: ['added_gift_card_policy', '14_gift_wrap_and_invoice']
+
+--- WebSocket /ws/chat: client 1 chats, then disconnects mid-conversation ---
+ws reply 1: Order NYK-0003 is currently Placed, with an order value of INR 4724; its escalation score is 0.08, so no escalation is needed right now. They can be used on any Nykaa order but cannot be exchanged for cash. An order is created only after a payment succeeds, so a failed payment does not produce an order ID.
+ws reply 2 (memory): Order NYK-0003 is currently Placed, with an order value of INR 4724; its escalation score is 0.08, so no escalation is needed right now. Placed means the order is confirmed and is being packed, and it has not yet been handed to the courier. A shipment is considered delayed when it is more than 2 days past its promised delivery date, and the customer can then ask for a status check.
+client 1 closed the socket before reading the 3rd reply (abrupt disconnect)
+--- server still alive: health check + a second client ---
+GET /health -> {'status': 'ok', 'mock_llm': True, 'strategy': 'sentence'}
+client 2 reply: Delivered means the parcel reached the address, and the return window starts from that date. Shipped means the courier has the parcel and a tracking link is available.
+
+--- JSONL log: 13 new entries (one per request), each with trace_id + timing ---
+{"ts": "2026-11-02T19:10:45.587650+00:00", "trace_id": "75affdbd2512", "endpoint": "/health", "method": "GET", "status_code": 200, "latency_ms": 1.79}
+{"ts": "2026-11-02T19:10:45.817340+00:00", "trace_id": "680e063451db", "endpoint": "/ask", "session_id": "api-1", "query": "How long does a COD refund take?", "pii_masked": [], "refused": false, "refusal_reason": null, "grounded": true, "tools_used": ["rag_lookup"], "cache_hit": false, "estimated_tokens": 708, "latency_ms": 225.9, "crew_ms": 211.07, "review_ms": 6.85}
+{"ts": "2026-11-02T19:10:46.025687+00:00", "trace_id": "7bd8d4014695", "endpoint": "/ask", "session_id": "api-2", "query": "My phone is [PHONE_MASKED]. What is the status of order NYK-0003?", "pii_masked": ["phone"], "refused": false, "refusal_reason": null, "grounded": true, "tools_used": ["rag_lookup", "check_order_status"], "cache_hit": false, "estimated_tokens": 717, "latency_ms": 204.46, "crew_ms": 194.97, "review_ms": 6.41}
+
+OK: no raw phone/card digits anywhere in the log file; server survived the disconnect.
+
+--- stderr (warnings are expected, e.g. LangChain deprecation) ---
+del 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.

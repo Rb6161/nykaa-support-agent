@@ -1,0 +1,22 @@
+$ python.exe dataset.py
+
+SEED=2026  records=240
+Count per category:
+  Apparel     73
+  Electronics 35
+  Home        29
+  Footwear    35
+  Beauty      68
+Count per status:
+  Placed      39
+  Shipped     47
+  Delivered   109
+  Returned    31
+  Refunded    14
+delayed_shipment=True: 15.83% (required band 10-30%)
+order_value_inr range actually generated: 230 - 14611
+Sample records:
+  {'record_id': 'NYK-0001', 'category': 'Beauty', 'status': 'Shipped', 'order_value_inr': 1888, 'days_since_created': 14, 'delayed_shipment': False}
+  {'record_id': 'NYK-0002', 'category': 'Electronics', 'status': 'Returned', 'order_value_inr': 9700, 'days_since_created': 21, 'delayed_shipment': False}
+  {'record_id': 'NYK-0003', 'category': 'Apparel', 'status': 'Placed', 'order_value_inr': 4724, 'days_since_created': 6, 'delayed_shipment': False}
+VALIDATION PASSED
