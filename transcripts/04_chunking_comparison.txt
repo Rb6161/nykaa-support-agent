@@ -3,11 +3,11 @@ $ python.exe eval_chunking.py
 
 ===== collection: fixed (top-k = 4 chunks) =====
 Q01 How many days do I have to return a lipstick?
-     4 chunks -> docs ['01_return_window', '04_reverse_pickup']  | relevant ['01_return_window']  | TP=1
-     precision = 1/2 = 0.500   recall = 1/1 = 1.000
-Q02 What is the return window for a hair dryer?
-     4 chunks -> docs ['01_return_window', '05_warranty', '13_order_status_meanings']  | relevant ['01_return_window']  | TP=1
+     4 chunks -> docs ['01_return_window', '04_reverse_pickup', '08_payment_failure']  | relevant ['01_return_window']  | TP=1
      precision = 1/3 = 0.333   recall = 1/1 = 1.000
+Q02 What is the return window for a hair dryer?
+     4 chunks -> docs ['01_return_window', '05_warranty']  | relevant ['01_return_window']  | TP=1
+     precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q03 Can I return shoes after 12 days?
      4 chunks -> docs ['01_return_window', '09_size_exchange']  | relevant ['01_return_window']  | TP=1
      precision = 1/2 = 0.500   recall = 1/1 = 1.000
@@ -15,31 +15,31 @@ Q04 How long does a COD refund take?
      4 chunks -> docs ['02_cod_refund', '06_cancellation', '10_damaged_item']  | relevant ['02_cod_refund']  | TP=1
      precision = 1/3 = 0.333   recall = 1/1 = 1.000
 Q05 I paid cash on delivery, how will I get my money back?
-     4 chunks -> docs ['02_cod_refund', '06_cancellation', '13_order_status_meanings']  | relevant ['02_cod_refund']  | TP=1
-     precision = 1/3 = 0.333   recall = 1/1 = 1.000
+     4 chunks -> docs ['02_cod_refund', '09_size_exchange', '06_cancellation', '08_payment_failure']  | relevant ['02_cod_refund']  | TP=1
+     precision = 1/4 = 0.250   recall = 1/1 = 1.000
 Q06 How many days does delivery take to a metro city?
      4 chunks -> docs ['03_delivery_sla', '04_reverse_pickup']  | relevant ['03_delivery_sla']  | TP=1
      precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q07 When is a shipment considered delayed?
-     4 chunks -> docs ['03_delivery_sla', '13_order_status_meanings', '04_reverse_pickup']  | relevant ['03_delivery_sla']  | TP=1
+     4 chunks -> docs ['03_delivery_sla', '13_order_status_meanings', '06_cancellation']  | relevant ['03_delivery_sla']  | TP=1
      precision = 1/3 = 0.333   recall = 1/1 = 1.000
 Q08 Is reverse pickup available for opened beauty products?
-     4 chunks -> docs ['04_reverse_pickup', '01_return_window', '09_size_exchange']  | relevant ['04_reverse_pickup']  | TP=1
+     4 chunks -> docs ['04_reverse_pickup', '09_size_exchange', '01_return_window']  | relevant ['04_reverse_pickup']  | TP=1
      precision = 1/3 = 0.333   recall = 1/1 = 1.000
 Q09 How many pickup attempts does the courier make?
-     4 chunks -> docs ['04_reverse_pickup', '13_order_status_meanings']  | relevant ['04_reverse_pickup']  | TP=1
-     precision = 1/2 = 0.500   recall = 1/1 = 1.000
+     4 chunks -> docs ['04_reverse_pickup']  | relevant ['04_reverse_pickup']  | TP=1
+     precision = 1/1 = 1.000   recall = 1/1 = 1.000
 Q10 What warranty does a trimmer have?
-     4 chunks -> docs ['05_warranty', '10_damaged_item']  | relevant ['05_warranty']  | TP=1
-     precision = 1/2 = 0.500   recall = 1/1 = 1.000
+     4 chunks -> docs ['05_warranty']  | relevant ['05_warranty']  | TP=1
+     precision = 1/1 = 1.000   recall = 1/1 = 1.000
 Q11 Do shoes come with a warranty?
      4 chunks -> docs ['05_warranty', '01_return_window', '09_size_exchange']  | relevant ['05_warranty']  | TP=1
      precision = 1/3 = 0.333   recall = 1/1 = 1.000
 Q12 Can I cancel my order after it has shipped?
-     4 chunks -> docs ['06_cancellation', '11_international_shipping']  | relevant ['06_cancellation']  | TP=1
+     4 chunks -> docs ['11_international_shipping', '06_cancellation']  | relevant ['06_cancellation']  | TP=1
      precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q13 How do I cancel an order that is still Placed?
-     4 chunks -> docs ['11_international_shipping', '06_cancellation']  | relevant ['06_cancellation']  | TP=1
+     4 chunks -> docs ['06_cancellation', '11_international_shipping']  | relevant ['06_cancellation']  | TP=1
      precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q14 How many loyalty points can I use on one order?
      4 chunks -> docs ['07_loyalty_points', '12_escalation_matrix']  | relevant ['07_loyalty_points']  | TP=1
@@ -48,36 +48,36 @@ Q15 When do my reward points expire?
      4 chunks -> docs ['07_loyalty_points', '12_escalation_matrix']  | relevant ['07_loyalty_points']  | TP=1
      precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q16 My payment failed but money was deducted
-     4 chunks -> docs ['08_payment_failure', '02_cod_refund', '10_damaged_item']  | relevant ['08_payment_failure']  | TP=1
-     precision = 1/3 = 0.333   recall = 1/1 = 1.000
+     4 chunks -> docs ['08_payment_failure', '10_damaged_item']  | relevant ['08_payment_failure']  | TP=1
+     precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q17 How many times can I retry a failed payment?
      4 chunks -> docs ['08_payment_failure', '06_cancellation']  | relevant ['08_payment_failure']  | TP=1
      precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q18 How do I exchange my kurta for a bigger size?
-     4 chunks -> docs ['09_size_exchange', '14_gift_wrap_and_invoice', '01_return_window']  | relevant ['09_size_exchange']  | TP=1
-     precision = 1/3 = 0.333   recall = 1/1 = 1.000
+     4 chunks -> docs ['09_size_exchange', '01_return_window']  | relevant ['09_size_exchange']  | TP=1
+     precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q19 I received a damaged product, what should I do?
-     4 chunks -> docs ['10_damaged_item', '05_warranty', '01_return_window']  | relevant ['10_damaged_item']  | TP=1
-     precision = 1/3 = 0.333   recall = 1/1 = 1.000
+     4 chunks -> docs ['10_damaged_item', '05_warranty']  | relevant ['10_damaged_item']  | TP=1
+     precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q20 Within how many hours must I report a leaking parcel?
-     4 chunks -> docs ['10_damaged_item', '03_delivery_sla', '13_order_status_meanings']  | relevant ['10_damaged_item']  | TP=1
+     4 chunks -> docs ['10_damaged_item', '03_delivery_sla', '06_cancellation']  | relevant ['10_damaged_item']  | TP=1
      precision = 1/3 = 0.333   recall = 1/1 = 1.000
 Q21 Can I ship perfume internationally?
      4 chunks -> docs ['11_international_shipping', '04_reverse_pickup']  | relevant ['11_international_shipping']  | TP=1
      precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q22 Who handles refund disputes above 10000 rupees?
-     4 chunks -> docs ['12_escalation_matrix', '10_damaged_item', '02_cod_refund']  | relevant ['12_escalation_matrix']  | TP=1
+     4 chunks -> docs ['12_escalation_matrix', '02_cod_refund', '10_damaged_item']  | relevant ['12_escalation_matrix']  | TP=1
      precision = 1/3 = 0.333   recall = 1/1 = 1.000
 Q23 What does the Shipped status mean?
      4 chunks -> docs ['13_order_status_meanings', '03_delivery_sla']  | relevant ['13_order_status_meanings']  | TP=1
      precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q24 Can I get a GST invoice for my order?
-     4 chunks -> docs ['14_gift_wrap_and_invoice', '04_reverse_pickup']  | relevant ['14_gift_wrap_and_invoice']  | TP=1
+     4 chunks -> docs ['14_gift_wrap_and_invoice', '09_size_exchange']  | relevant ['14_gift_wrap_and_invoice']  | TP=1
      precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q25 I want to return a damaged item and get a refund on COD
-     4 chunks -> docs ['02_cod_refund', '05_warranty', '10_damaged_item']  | relevant ['02_cod_refund', '10_damaged_item']  | TP=2
-     precision = 2/3 = 0.667   recall = 2/2 = 1.000
-MEAN precision = 0.433   MEAN recall = 1.000   F1 = 0.605
+     4 chunks -> docs ['10_damaged_item', '02_cod_refund']  | relevant ['02_cod_refund', '10_damaged_item']  | TP=2
+     precision = 2/2 = 1.000   recall = 2/2 = 1.000
+MEAN precision = 0.503   MEAN recall = 1.000   F1 = 0.670
 
 ===== collection: sentence (top-k = 4 chunks) =====
 Q01 How many days do I have to return a lipstick?
@@ -96,13 +96,13 @@ Q05 I paid cash on delivery, how will I get my money back?
      4 chunks -> docs ['02_cod_refund', '13_order_status_meanings']  | relevant ['02_cod_refund']  | TP=1
      precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q06 How many days does delivery take to a metro city?
-     4 chunks -> docs ['03_delivery_sla', '04_reverse_pickup', '13_order_status_meanings']  | relevant ['03_delivery_sla']  | TP=1
+     4 chunks -> docs ['03_delivery_sla', '11_international_shipping', '04_reverse_pickup']  | relevant ['03_delivery_sla']  | TP=1
      precision = 1/3 = 0.333   recall = 1/1 = 1.000
 Q07 When is a shipment considered delayed?
-     4 chunks -> docs ['03_delivery_sla', '13_order_status_meanings', '10_damaged_item', '09_size_exchange']  | relevant ['03_delivery_sla']  | TP=1
-     precision = 1/4 = 0.250   recall = 1/1 = 1.000
+     4 chunks -> docs ['03_delivery_sla', '13_order_status_meanings', '11_international_shipping']  | relevant ['03_delivery_sla']  | TP=1
+     precision = 1/3 = 0.333   recall = 1/1 = 1.000
 Q08 Is reverse pickup available for opened beauty products?
-     4 chunks -> docs ['04_reverse_pickup', '01_return_window']  | relevant ['04_reverse_pickup']  | TP=1
+     4 chunks -> docs ['04_reverse_pickup', '09_size_exchange']  | relevant ['04_reverse_pickup']  | TP=1
      precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q09 How many pickup attempts does the courier make?
      4 chunks -> docs ['04_reverse_pickup', '13_order_status_meanings']  | relevant ['04_reverse_pickup']  | TP=1
@@ -132,17 +132,17 @@ Q17 How many times can I retry a failed payment?
      4 chunks -> docs ['08_payment_failure', '02_cod_refund']  | relevant ['08_payment_failure']  | TP=1
      precision = 1/2 = 0.500   recall = 1/1 = 1.000
 Q18 How do I exchange my kurta for a bigger size?
-     4 chunks -> docs ['09_size_exchange', '03_delivery_sla']  | relevant ['09_size_exchange']  | TP=1
-     precision = 1/2 = 0.500   recall = 1/1 = 1.000
+     4 chunks -> docs ['09_size_exchange']  | relevant ['09_size_exchange']  | TP=1
+     precision = 1/1 = 1.000   recall = 1/1 = 1.000
 Q19 I received a damaged product, what should I do?
-     4 chunks -> docs ['10_damaged_item', '05_warranty']  | relevant ['10_damaged_item']  | TP=1
-     precision = 1/2 = 0.500   recall = 1/1 = 1.000
+     4 chunks -> docs ['10_damaged_item']  | relevant ['10_damaged_item']  | TP=1
+     precision = 1/1 = 1.000   recall = 1/1 = 1.000
 Q20 Within how many hours must I report a leaking parcel?
      4 chunks -> docs ['10_damaged_item', '03_delivery_sla', '12_escalation_matrix']  | relevant ['10_damaged_item']  | TP=1
      precision = 1/3 = 0.333   recall = 1/1 = 1.000
 Q21 Can I ship perfume internationally?
-     4 chunks -> docs ['11_international_shipping', '13_order_status_meanings']  | relevant ['11_international_shipping']  | TP=1
-     precision = 1/2 = 0.500   recall = 1/1 = 1.000
+     4 chunks -> docs ['11_international_shipping']  | relevant ['11_international_shipping']  | TP=1
+     precision = 1/1 = 1.000   recall = 1/1 = 1.000
 Q22 Who handles refund disputes above 10000 rupees?
      4 chunks -> docs ['12_escalation_matrix', '02_cod_refund']  | relevant ['12_escalation_matrix']  | TP=1
      precision = 1/2 = 0.500   recall = 1/1 = 1.000
@@ -155,13 +155,13 @@ Q24 Can I get a GST invoice for my order?
 Q25 I want to return a damaged item and get a refund on COD
      4 chunks -> docs ['10_damaged_item', '02_cod_refund', '13_order_status_meanings']  | relevant ['02_cod_refund', '10_damaged_item']  | TP=2
      precision = 2/3 = 0.667   recall = 2/2 = 1.000
-MEAN precision = 0.597   MEAN recall = 1.000   F1 = 0.747
+MEAN precision = 0.660   MEAN recall = 1.000   F1 = 0.795
 
 RECOMMENDATION:
-I recommend deploying the sentence-based chunking. It scored mean precision 0.597 and mean recall 1.000 (F1 0.747) over the 25 queries, against precision 0.433, recall 1.000 (F1 0.605) for the fixed strategy. It indexes 69 chunks versus 41.
+I recommend deploying the sentence-based chunking. It scored mean precision 0.660 and mean recall 1.000 (F1 0.795) over the 25 queries, against precision 0.503, recall 1.000 (F1 0.670) for the fixed strategy. It indexes 84 chunks versus 53.
 wrote chunk_eval.json and recommendation.json (the pipeline now uses 'sentence')
 
 --- stderr (warnings are expected, e.g. LangChain deprecation) ---
 
 Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
-Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4575.59it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3493.98it/s]

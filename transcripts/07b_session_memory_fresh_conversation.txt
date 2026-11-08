@@ -11,9 +11,9 @@ stored history for session 'fresh': 2 messages (only this turn)
 OK: no state was available, so the agent correctly asked for the order id instead of guessing.
 
 --- stderr (warnings are expected, e.g. LangChain deprecation) ---
-<repo>\pipeline.py:34: LangChainDeprecationWarning: RunnableWithMessageHistory is deprecated. Use LangGraph's built-in persistence instead.
+<repo>\pipeline.py:37: LangChainDeprecationWarning: RunnableWithMessageHistory is deprecated. Use LangGraph's built-in persistence instead.
   self.memory = ConversationMemory(self._turn)
-<repo>\pipeline.py:34: LangChainDeprecationWarning: RunnableWithMessageHistory is deprecated. Use LangGraph's built-in persistence instead.
+<repo>\pipeline.py:37: LangChainDeprecationWarning: RunnableWithMessageHistory is deprecated. Use LangGraph's built-in persistence instead.
   self.memory = ConversationMemory(self._turn)
 <repo>\memory.py:25: LangChainDeprecationWarning: The class `InMemoryChatMessageHistory` was deprecated in LangChain 1.6.4 and will be removed in 2.0.0 See the short-term memory documentation for recommended alternatives: https://docs.langchain.com/oss/python/langchain/short-term-memory
   return self._histories.setdefault(session_id, InMemoryChatMessageHistory())

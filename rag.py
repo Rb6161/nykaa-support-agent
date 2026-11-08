@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 from cache import ResponseCache
-from textutil import IDK_MESSAGE, split_sentences
+from textutil import IDK_MESSAGE, split_sentences, uncovered_terms
 
 ROOT = Path(__file__).parent
 KB_DIR = ROOT / "kb"
@@ -172,13 +172,17 @@ class RAGEngine:
                 if key in seen or key in self.titles:
                     continue
                 seen.add(key)
-                sents.append(s)
+                sents.append((s, h["doc_id"]))
         if not sents:
             return IDK_MESSAGE
         qv = self.embed([query])[0]
-        sv = self.embed(sents)
-        scored = sorted(((sum(a * b for a, b in zip(qv, v)), s) for v, s in zip(sv, sents)), reverse=True)
-        return " ".join(s for _, s in scored[:max_sentences])
+        sv = self.embed([s for s, _ in sents])
+        scored = sorted(((sum(a * b for a, b in zip(qv, v)), s, d) for v, (s, d) in zip(sv, sents)), reverse=True)
+        # Best sentence first; any supporting sentence must come from the SAME policy document, so an
+        # answer about the return window is never padded with a sentence from an unrelated policy.
+        top_doc = scored[0][2]
+        chosen = [x for x in scored if x[2] == top_doc][:max_sentences]
+        return " ".join(s for _, s, _ in chosen)
 
     def grounded_answer_uncached(self, query: str, strategy: Optional[str] = None, k: int = TOP_K) -> dict:
         strategy = strategy or recommended_strategy()
@@ -190,8 +194,17 @@ class RAGEngine:
                     "top1_similarity": top1, "threshold": threshold, "chunks": [h["text"] for h in hits]}
         answer = self._generate(query, hits)
         sources = list(dict.fromkeys(h["doc_id"] for h in hits))
+        chunks = [h["text"] for h in hits]
+        # Coverage check: if the question names something the retrieved policy text never mentions
+        # (e.g. "washing machine"), do not let loosely related sentences pass as an answer. Say so and hand over.
+        missing = uncovered_terms(query, " ".join(chunks))
+        if missing:
+            note = ("Note: Nykaa's policy documents do not specifically mention " + ", ".join(missing)
+                    + ", so I cannot confirm this. Please contact customer support so a human agent can review it.")
+            answer = f"{answer} {note}"
+            chunks = chunks + [note]   # the note is part of the grounding context
         return {"query": query, "strategy": strategy, "answer": answer, "sources": sources, "grounded": True,
-                "top1_similarity": top1, "threshold": threshold, "chunks": [h["text"] for h in hits]}
+                "top1_similarity": top1, "threshold": threshold, "chunks": chunks, "uncovered_terms": missing}
 
 
 _engine: Optional[RAGEngine] = None

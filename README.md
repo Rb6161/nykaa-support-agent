@@ -132,7 +132,7 @@ uvicorn app:app --port 8000            # start the API (after run_all.py has cal
 <!-- RESULTS:START -->
 ### Measured similarity threshold (Task 4)
 
-**fixed collection** - in-scope top-1 similarities: 0.712, 0.663, 0.658, 0.700, 0.606 (min 0.606); out-of-scope: 0.056, 0.064, 0.087, 0.099 (max 0.099). **Chosen threshold = 0.3524** (midpoint of the two clusters).
+**fixed collection** - in-scope top-1 similarities: 0.712, 0.663, 0.658, 0.700, 0.606 (min 0.606); out-of-scope: 0.056, 0.130, 0.075, 0.099 (max 0.130). **Chosen threshold = 0.368** (midpoint of the two clusters).
 
 **sentence collection** - in-scope top-1 similarities: 0.775, 0.734, 0.714, 0.709, 0.629 (min 0.629); out-of-scope: 0.143, 0.101, 0.099, 0.164 (max 0.164). **Chosen threshold = 0.3968** (midpoint of the two clusters).
 
@@ -140,10 +140,10 @@ uvicorn app:app --port 8000            # start the API (after run_all.py has cal
 
 | strategy | chunks | mean precision | mean recall | F1 |
 |---|---|---|---|---|
-| fixed | 41 | 0.433 | 1.000 | 0.605 |
-| sentence | 69 | 0.597 | 1.000 | 0.747 |
+| fixed | 53 | 0.503 | 1.000 | 0.670 |
+| sentence | 84 | 0.660 | 1.000 | 0.795 |
 
-I recommend deploying the sentence-based chunking. It scored mean precision 0.597 and mean recall 1.000 (F1 0.747) over the 25 queries, against precision 0.433, recall 1.000 (F1 0.605) for the fixed strategy. It indexes 69 chunks versus 41.
+I recommend deploying the sentence-based chunking. It scored mean precision 0.660 and mean recall 1.000 (F1 0.795) over the 25 queries, against precision 0.503, recall 1.000 (F1 0.670) for the fixed strategy. It indexes 84 chunks versus 53.
 
 Per-query arithmetic: `transcripts/04_chunking_comparison.txt`.
 
@@ -153,14 +153,14 @@ Per-query arithmetic: `transcripts/04_chunking_comparison.txt`.
 |---|---|
 | accuracy | 1.000 |
 | grounding | 1.000 |
-| completeness | 1.000 |
+| completeness | 0.933 |
 | safety | 1.000 |
 
 Per-query scores: `transcripts/09_evaluation_15_queries.txt`.
 
 ### Cache evidence (Task 16)
 
-First call 36.45 ms (generation calls 1); repeated query 0.41 ms with generation calls still 1.
+First call 43.34 ms (generation calls 1); repeated query 0.42 ms with generation calls still 1.
 
 <!-- RESULTS:END -->
 

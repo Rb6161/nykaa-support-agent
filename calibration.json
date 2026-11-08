@@ -9,14 +9,14 @@
     },
     "out_of_scope": {
       "What is the capital of France?": 0.0562,
-      "How do I bake sourdough bread?": 0.0635,
-      "Explain how photosynthesis works": 0.0868,
+      "How do I bake sourdough bread?": 0.1298,
+      "Explain how photosynthesis works": 0.0749,
       "Which python web framework is the fastest?": 0.0986
     },
     "min_in_scope": 0.6063,
-    "max_out_of_scope": 0.0986,
+    "max_out_of_scope": 0.1298,
     "separated": true,
-    "threshold": 0.3524
+    "threshold": 0.368
   },
   "sentence": {
     "in_scope": {

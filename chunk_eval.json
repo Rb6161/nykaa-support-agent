@@ -5,27 +5,27 @@
         "query": "How many days do I have to return a lipstick?",
         "retrieved_docs": [
           "01_return_window",
-          "04_reverse_pickup"
-        ],
-        "relevant": [
-          "01_return_window"
-        ],
-        "tp": 1,
-        "precision": 0.5,
-        "recall": 1.0
-      },
-      {
-        "query": "What is the return window for a hair dryer?",
-        "retrieved_docs": [
-          "01_return_window",
-          "05_warranty",
-          "13_order_status_meanings"
+          "04_reverse_pickup",
+          "08_payment_failure"
         ],
         "relevant": [
           "01_return_window"
         ],
         "tp": 1,
         "precision": 0.3333333333333333,
+        "recall": 1.0
+      },
+      {
+        "query": "What is the return window for a hair dryer?",
+        "retrieved_docs": [
+          "01_return_window",
+          "05_warranty"
+        ],
+        "relevant": [
+          "01_return_window"
+        ],
+        "tp": 1,
+        "precision": 0.5,
         "recall": 1.0
       },
       {
@@ -59,14 +59,15 @@
         "query": "I paid cash on delivery, how will I get my money back?",
         "retrieved_docs": [
           "02_cod_refund",
+          "09_size_exchange",
           "06_cancellation",
-          "13_order_status_meanings"
+          "08_payment_failure"
         ],
         "relevant": [
           "02_cod_refund"
         ],
         "tp": 1,
-        "precision": 0.3333333333333333,
+        "precision": 0.25,
         "recall": 1.0
       },
       {
@@ -87,7 +88,7 @@
         "retrieved_docs": [
           "03_delivery_sla",
           "13_order_status_meanings",
-          "04_reverse_pickup"
+          "06_cancellation"
         ],
         "relevant": [
           "03_delivery_sla"
@@ -100,8 +101,8 @@
         "query": "Is reverse pickup available for opened beauty products?",
         "retrieved_docs": [
           "04_reverse_pickup",
-          "01_return_window",
-          "09_size_exchange"
+          "09_size_exchange",
+          "01_return_window"
         ],
         "relevant": [
           "04_reverse_pickup"
@@ -113,27 +114,25 @@
       {
         "query": "How many pickup attempts does the courier make?",
         "retrieved_docs": [
-          "04_reverse_pickup",
-          "13_order_status_meanings"
+          "04_reverse_pickup"
         ],
         "relevant": [
           "04_reverse_pickup"
         ],
         "tp": 1,
-        "precision": 0.5,
+        "precision": 1.0,
         "recall": 1.0
       },
       {
         "query": "What warranty does a trimmer have?",
         "retrieved_docs": [
-          "05_warranty",
-          "10_damaged_item"
+          "05_warranty"
         ],
         "relevant": [
           "05_warranty"
         ],
         "tp": 1,
-        "precision": 0.5,
+        "precision": 1.0,
         "recall": 1.0
       },
       {
@@ -153,8 +152,8 @@
       {
         "query": "Can I cancel my order after it has shipped?",
         "retrieved_docs": [
-          "06_cancellation",
-          "11_international_shipping"
+          "11_international_shipping",
+          "06_cancellation"
         ],
         "relevant": [
           "06_cancellation"
@@ -166,8 +165,8 @@
       {
         "query": "How do I cancel an order that is still Placed?",
         "retrieved_docs": [
-          "11_international_shipping",
-          "06_cancellation"
+          "06_cancellation",
+          "11_international_shipping"
         ],
         "relevant": [
           "06_cancellation"
@@ -206,14 +205,13 @@
         "query": "My payment failed but money was deducted",
         "retrieved_docs": [
           "08_payment_failure",
-          "02_cod_refund",
           "10_damaged_item"
         ],
         "relevant": [
           "08_payment_failure"
         ],
         "tp": 1,
-        "precision": 0.3333333333333333,
+        "precision": 0.5,
         "recall": 1.0
       },
       {
@@ -233,28 +231,26 @@
         "query": "How do I exchange my kurta for a bigger size?",
         "retrieved_docs": [
           "09_size_exchange",
-          "14_gift_wrap_and_invoice",
           "01_return_window"
         ],
         "relevant": [
           "09_size_exchange"
         ],
         "tp": 1,
-        "precision": 0.3333333333333333,
+        "precision": 0.5,
         "recall": 1.0
       },
       {
         "query": "I received a damaged product, what should I do?",
         "retrieved_docs": [
           "10_damaged_item",
-          "05_warranty",
-          "01_return_window"
+          "05_warranty"
         ],
         "relevant": [
           "10_damaged_item"
         ],
         "tp": 1,
-        "precision": 0.3333333333333333,
+        "precision": 0.5,
         "recall": 1.0
       },
       {
@@ -262,7 +258,7 @@
         "retrieved_docs": [
           "10_damaged_item",
           "03_delivery_sla",
-          "13_order_status_meanings"
+          "06_cancellation"
         ],
         "relevant": [
           "10_damaged_item"
@@ -288,8 +284,8 @@
         "query": "Who handles refund disputes above 10000 rupees?",
         "retrieved_docs": [
           "12_escalation_matrix",
-          "10_damaged_item",
-          "02_cod_refund"
+          "02_cod_refund",
+          "10_damaged_item"
         ],
         "relevant": [
           "12_escalation_matrix"
@@ -315,7 +311,7 @@
         "query": "Can I get a GST invoice for my order?",
         "retrieved_docs": [
           "14_gift_wrap_and_invoice",
-          "04_reverse_pickup"
+          "09_size_exchange"
         ],
         "relevant": [
           "14_gift_wrap_and_invoice"
@@ -327,23 +323,22 @@
       {
         "query": "I want to return a damaged item and get a refund on COD",
         "retrieved_docs": [
-          "02_cod_refund",
-          "05_warranty",
-          "10_damaged_item"
+          "10_damaged_item",
+          "02_cod_refund"
         ],
         "relevant": [
           "02_cod_refund",
           "10_damaged_item"
         ],
         "tp": 2,
-        "precision": 0.6666666666666666,
+        "precision": 1.0,
         "recall": 1.0
       }
     ],
-    "mean_precision": 0.43333333333333335,
+    "mean_precision": 0.5033333333333334,
     "mean_recall": 1.0,
-    "f1": 0.6046511627906976,
-    "chunks": 41
+    "f1": 0.6696230598669624,
+    "chunks": 53
   },
   "sentence": {
     "rows": [
@@ -416,8 +411,8 @@
         "query": "How many days does delivery take to a metro city?",
         "retrieved_docs": [
           "03_delivery_sla",
-          "04_reverse_pickup",
-          "13_order_status_meanings"
+          "11_international_shipping",
+          "04_reverse_pickup"
         ],
         "relevant": [
           "03_delivery_sla"
@@ -431,21 +426,20 @@
         "retrieved_docs": [
           "03_delivery_sla",
           "13_order_status_meanings",
-          "10_damaged_item",
-          "09_size_exchange"
+          "11_international_shipping"
         ],
         "relevant": [
           "03_delivery_sla"
         ],
         "tp": 1,
-        "precision": 0.25,
+        "precision": 0.3333333333333333,
         "recall": 1.0
       },
       {
         "query": "Is reverse pickup available for opened beauty products?",
         "retrieved_docs": [
           "04_reverse_pickup",
-          "01_return_window"
+          "09_size_exchange"
         ],
         "relevant": [
           "04_reverse_pickup"
@@ -569,27 +563,25 @@
       {
         "query": "How do I exchange my kurta for a bigger size?",
         "retrieved_docs": [
-          "09_size_exchange",
-          "03_delivery_sla"
+          "09_size_exchange"
         ],
         "relevant": [
           "09_size_exchange"
         ],
         "tp": 1,
-        "precision": 0.5,
+        "precision": 1.0,
         "recall": 1.0
       },
       {
         "query": "I received a damaged product, what should I do?",
         "retrieved_docs": [
-          "10_damaged_item",
-          "05_warranty"
+          "10_damaged_item"
         ],
         "relevant": [
           "10_damaged_item"
         ],
         "tp": 1,
-        "precision": 0.5,
+        "precision": 1.0,
         "recall": 1.0
       },
       {
@@ -609,14 +601,13 @@
       {
         "query": "Can I ship perfume internationally?",
         "retrieved_docs": [
-          "11_international_shipping",
-          "13_order_status_meanings"
+          "11_international_shipping"
         ],
         "relevant": [
           "11_international_shipping"
         ],
         "tp": 1,
-        "precision": 0.5,
+        "precision": 1.0,
         "recall": 1.0
       },
       {
@@ -674,13 +665,13 @@
         "recall": 1.0
       }
     ],
-    "mean_precision": 0.5966666666666667,
+    "mean_precision": 0.66,
     "mean_recall": 1.0,
-    "f1": 0.7473903966597077,
-    "chunks": 69
+    "f1": 0.7951807228915663,
+    "chunks": 84
   },
   "recommendation": {
     "strategy": "sentence",
-    "text": "I recommend deploying the sentence-based chunking. It scored mean precision 0.597 and mean recall 1.000 (F1 0.747) over the 25 queries, against precision 0.433, recall 1.000 (F1 0.605) for the fixed strategy. It indexes 69 chunks versus 41."
+    "text": "I recommend deploying the sentence-based chunking. It scored mean precision 0.660 and mean recall 1.000 (F1 0.795) over the 25 queries, against precision 0.503, recall 1.000 (F1 0.670) for the fixed strategy. It indexes 84 chunks versus 53."
   }
 }

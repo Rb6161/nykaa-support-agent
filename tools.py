@@ -13,6 +13,7 @@ from pydantic import BaseModel, Field
 import rag
 from orders import check_order_status
 
+NO_POLICY_QUESTION = "__NO_POLICY_QUESTION__"   # set when the customer only asked about an order
 TOOL_CALL_LOG: List[dict] = []
 
 
@@ -29,6 +30,9 @@ class RagLookupTool(BaseTool):
     args_schema: Type[BaseModel] = RagLookupInput
 
     def _run(self, query: str) -> str:
+        if query.strip() == NO_POLICY_QUESTION:      # order-only request: nothing to look up in the policy KB
+            return json.dumps({"tool": "rag_lookup", "answer": "", "sources": [], "grounded": False,
+                               "top1_similarity": 0.0, "chunks": []})
         result = rag.grounded_answer(query)  # cached grounded-generation step
         TOOL_CALL_LOG.append({"tool": self.name, "input": query, "cache_hit": result["cache_hit"]})
         payload = {"tool": "rag_lookup", "answer": result["answer"], "sources": result["sources"],

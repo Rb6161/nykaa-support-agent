@@ -1,4 +1,4 @@
 {
   "strategy": "sentence",
-  "text": "I recommend deploying the sentence-based chunking. It scored mean precision 0.597 and mean recall 1.000 (F1 0.747) over the 25 queries, against precision 0.433, recall 1.000 (F1 0.605) for the fixed strategy. It indexes 69 chunks versus 41."
+  "text": "I recommend deploying the sentence-based chunking. It scored mean precision 0.660 and mean recall 1.000 (F1 0.795) over the 25 queries, against precision 0.503, recall 1.000 (F1 0.670) for the fixed strategy. It indexes 84 chunks versus 53."
 }

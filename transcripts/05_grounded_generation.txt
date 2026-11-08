@@ -12,26 +12,26 @@ strategy = sentence   threshold = 0.3968   top-k = 4
 
 [03] Q: Can I return shoes after 12 days?
      top-1 sim 0.599 | grounded=True | sources=['01_return_window', '09_size_exchange', '05_warranty']
-     A: Home products and small accessories can be returned within 10 days. Apparel and footwear can be exchanged once for a different size within 15 days of delivery, subject to stock.
+     A: Home products and small accessories can be returned within 10 days. Apparel and footwear have a 15-day return window, but items must carry their original tags and show no signs of wear.
 
 [04] Q: How long does a COD refund take?
      top-1 sim 0.640 | grounded=True | sources=['02_cod_refund', '06_cancellation']
-     A: Once the returned item passes quality check, the refund is released within 5 to 7 working days. Prepaid cancellations are refunded to the original payment method within 5 to 7 working days.
+     A: Once the returned item passes quality check, the refund is released within 5 to 7 working days. If the bank details are wrong, the refund is held until the customer corrects them.
 
 [05] Q: I paid cash on delivery, how will I get my money back?
      top-1 sim 0.703 | grounded=True | sources=['02_cod_refund', '13_order_status_meanings']
      A: Refunds for Cash on Delivery orders cannot go back to the original payment method, so they are paid by bank transfer. If the bank details are wrong, the refund is held until the customer corrects them.
 
 [06] Q: How many days does delivery take to a metro city?
-     top-1 sim 0.750 | grounded=True | sources=['03_delivery_sla', '04_reverse_pickup', '13_order_status_meanings']
-     A: Metro cities receive standard orders within 2 to 4 days after dispatch. The courier makes up to 3 pickup attempts over 3 working days.
+     top-1 sim 0.750 | grounded=True | sources=['03_delivery_sla', '11_international_shipping', '04_reverse_pickup']
+     A: Metro cities receive standard orders within 2 to 4 days after dispatch. The delivery date shown at checkout is an estimate, and public holidays can add a day or two.
 
 [07] Q: When is a shipment considered delayed?
-     top-1 sim 0.859 | grounded=True | sources=['03_delivery_sla', '13_order_status_meanings', '10_damaged_item', '09_size_exchange']
-     A: A shipment is considered delayed when it is more than 2 days past its promised delivery date, and the customer can then ask for a status check. Shipped means the courier has the parcel and a tracking link is available.
+     top-1 sim 0.859 | grounded=True | sources=['03_delivery_sla', '13_order_status_meanings', '11_international_shipping']
+     A: A shipment is considered delayed when it is more than 2 days past its promised delivery date, and the customer can then ask for a status check.
 
 [08] Q: Is reverse pickup available for opened beauty products?
-     top-1 sim 0.678 | grounded=True | sources=['04_reverse_pickup', '01_return_window']
+     top-1 sim 0.678 | grounded=True | sources=['04_reverse_pickup', '09_size_exchange']
      A: Pickup is not available for opened beauty products, items without original packaging, or pin codes outside the courier network. Reverse pickup is offered for eligible orders on serviceable pin codes when the return is raised inside the return window.
 
 [09] Q: How many pickup attempts does the courier make?
@@ -48,11 +48,11 @@ strategy = sentence   threshold = 0.3968   top-k = 4
 
 [12] Q: Can I cancel my order after it has shipped?
      top-1 sim 0.738 | grounded=True | sources=['06_cancellation']
-     A: Once the order is Shipped, it can no longer be cancelled, and the customer should refuse delivery or raise a return after receiving it. An order can be cancelled free of charge while its status is Placed, which means it has not been handed to the courier.
+     A: Once the order is Shipped, it can no longer be cancelled, and the customer should refuse delivery or raise a return after receiving it. The order details page shows the current status, so the customer can check whether cancellation is still possible.
 
 [13] Q: How do I cancel an order that is still Placed?
      top-1 sim 0.722 | grounded=True | sources=['06_cancellation']
-     A: Once the order is Shipped, it can no longer be cancelled, and the customer should refuse delivery or raise a return after receiving it. An order can be cancelled free of charge while its status is Placed, which means it has not been handed to the courier.
+     A: The order details page shows the current status, so the customer can check whether cancellation is still possible. Once the order is Shipped, it can no longer be cancelled, and the customer should refuse delivery or raise a return after receiving it.
 
 [14] Q: How many loyalty points can I use on one order?
      top-1 sim 0.684 | grounded=True | sources=['07_loyalty_points']
@@ -64,35 +64,35 @@ strategy = sentence   threshold = 0.3968   top-k = 4
 
 [16] Q: My payment failed but money was deducted
      top-1 sim 0.605 | grounded=True | sources=['08_payment_failure', '02_cod_refund']
-     A: If a payment fails but money is debited, the amount is automatically reversed to the source within 5 to 7 working days. If the bank details are wrong, the refund is held until the customer corrects them.
+     A: If a payment fails but money is debited, the amount is automatically reversed to the source within 5 to 7 working days. If the debited amount has not been reversed after 7 working days, the customer can raise a ticket with the bank statement attached. Note: Nykaa's policy documents do not specifically mention failed, so I cannot confirm this. Please contact customer support so a human agent can review it.
 
 [17] Q: How many times can I retry a failed payment?
      top-1 sim 0.809 | grounded=True | sources=['08_payment_failure', '02_cod_refund']
-     A: The customer may retry the payment up to 3 times from the same cart before the order is released. If a payment fails but money is debited, the amount is automatically reversed to the source within 5 to 7 working days.
+     A: The customer may retry the payment up to 3 times from the same cart before the order is released. If a payment fails but money is debited, the amount is automatically reversed to the source within 5 to 7 working days. Note: Nykaa's policy documents do not specifically mention failed, so I cannot confirm this. Please contact customer support so a human agent can review it.
 
 [18] Q: How do I exchange my kurta for a bigger size?
-     top-1 sim 0.440 | grounded=True | sources=['09_size_exchange', '03_delivery_sla']
-     A: Apparel and footwear can be exchanged once for a different size within 15 days of delivery, subject to stock. If the requested size is out of stock, the customer receives a refund instead.
+     top-1 sim 0.469 | grounded=True | sources=['09_size_exchange']
+     A: Exchanges are requested from the order details page, and a pickup is arranged for the size being returned. Apparel and footwear can be exchanged once for a different size within 15 days of delivery, subject to stock.
 
 [19] Q: I received a damaged product, what should I do?
-     top-1 sim 0.482 | grounded=True | sources=['10_damaged_item', '05_warranty']
-     A: If a parcel arrives damaged, leaking or with the wrong item, the customer should report it within 48 hours of delivery. The claim requires the order ID and clear details of the damage, and the packaging must be kept.
+     top-1 sim 0.553 | grounded=True | sources=['10_damaged_item']
+     A: Photos of the damaged item and its packaging help speed up verification. If a parcel arrives damaged, leaking or with the wrong item, the customer should report it within 48 hours of delivery.
 
 [20] Q: Within how many hours must I report a leaking parcel?
      top-1 sim 0.835 | grounded=True | sources=['10_damaged_item', '03_delivery_sla', '12_escalation_matrix']
-     A: If a parcel arrives damaged, leaking or with the wrong item, the customer should report it within 48 hours of delivery. A shipment is considered delayed when it is more than 2 days past its promised delivery date, and the customer can then ask for a status check.
+     A: If a parcel arrives damaged, leaking or with the wrong item, the customer should report it within 48 hours of delivery. The claim requires the order ID and clear details of the damage, and the packaging must be kept.
 
 [21] Q: Can I ship perfume internationally?
-     top-1 sim 0.708 | grounded=True | sources=['11_international_shipping', '13_order_status_meanings']
+     top-1 sim 0.708 | grounded=True | sources=['11_international_shipping']
      A: Aerosols, perfumes with alcohol, nail polish, and items with batteries or flammable content cannot be shipped abroad. International delivery is available only to a limited list of countries and only for non-restricted items.
 
 [22] Q: Who handles refund disputes above 10000 rupees?
      top-1 sim 0.552 | grounded=True | sources=['12_escalation_matrix', '02_cod_refund']
-     A: Refund disputes, repeated failed deliveries and high-value orders above 10,000 rupees go to Level 3, the support manager, within 72 hours. If the bank details are wrong, the refund is held until the customer corrects them.
+     A: Refund disputes, repeated failed deliveries and high-value orders above 10,000 rupees go to Level 3, the support manager, within 72 hours. Note: Nykaa's policy documents do not specifically mention handles, so I cannot confirm this. Please contact customer support so a human agent can review it.
 
 [23] Q: What does the Shipped status mean?
      top-1 sim 0.723 | grounded=True | sources=['13_order_status_meanings', '03_delivery_sla']
-     A: Shipped means the courier has the parcel and a tracking link is available. A shipment is considered delayed when it is more than 2 days past its promised delivery date, and the customer can then ask for a status check.
+     A: Shipped means the courier has the parcel and a tracking link is available. A delayed shipment keeps its current status, and the customer can ask for a status check.
 
 [24] Q: Can I get a GST invoice for my order?
      top-1 sim 0.850 | grounded=True | sources=['14_gift_wrap_and_invoice', '05_warranty']
@@ -100,7 +100,7 @@ strategy = sentence   threshold = 0.3968   top-k = 4
 
 [25] Q: I want to return a damaged item and get a refund on COD
      top-1 sim 0.547 | grounded=True | sources=['10_damaged_item', '02_cod_refund', '13_order_status_meanings']
-     A: Once the returned item passes quality check, the refund is released within 5 to 7 working days. Returned means the item came back to the warehouse, and Refunded means the money has been sent back to the customer.
+     A: Once the returned item passes quality check, the refund is released within 5 to 7 working days. If the bank details are wrong, the refund is held until the customer corrects them.
 
 in-scope answered (grounded): 25/25
 
@@ -113,4 +113,4 @@ OK: out-of-scope query triggered the 'I don't know' fallback.
 --- stderr (warnings are expected, e.g. LangChain deprecation) ---
 
 Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
-Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3908.49it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3267.60it/s]

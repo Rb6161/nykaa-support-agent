@@ -101,3 +101,18 @@ def test_strip_mask_tokens_for_retrieval():
     assert strip_mask_tokens(m) == "My card ending was charged twice, how long does a refund take?"
     m, _ = mask_pii("My phone 9876543210 and order NYK-0007. Is it late?")                  # order id sentence is kept
     assert "NYK-0007" in strip_mask_tokens(m)
+
+
+def test_uncovered_terms_flags_unknown_product_but_not_known_ones():
+    from textutil import uncovered_terms
+    warranty = "Electronics such as hair dryers and trimmers carry a manufacturer warranty of 6 to 12 months."
+    assert uncovered_terms("Is my washing machine covered by warranty?", warranty) == ["washing", "machine"]
+    assert uncovered_terms("What warranty does a trimmer have?", warranty) == []
+    assert uncovered_terms("Do shoes come with a warranty?", warranty + " Footwear has no warranty.") == []
+
+
+def test_sensitive_card_words_detected_but_not_pin_code():
+    from textutil import SENSITIVE_CARD_RE
+    assert SENSITIVE_CARD_RE.search("my CVV is 123") and SENSITIVE_CARD_RE.search("card expiry 12/27")
+    assert SENSITIVE_CARD_RE.search("my ATM PIN is 1234")
+    assert not SENSITIVE_CARD_RE.search("does delivery reach my pin code?")

@@ -14,7 +14,7 @@ from crewai import Agent, Crew, Process, Task
 from governance import audit_tool_wiring, authorize_tool
 from mock_llm import get_llm
 from schemas import CrewAnswer
-from tools import CheckOrderStatusTool, RagLookupTool
+from tools import NO_POLICY_QUESTION, CheckOrderStatusTool, RagLookupTool
 
 
 def make_agent(role: str, goal: str, backstory: str, tools: list, llm) -> Agent:
@@ -24,7 +24,7 @@ def make_agent(role: str, goal: str, backstory: str, tools: list, llm) -> Agent:
                  allow_delegation=False, verbose=False)
 
 
-def build_crew(question: str, order_id: Optional[str]) -> Crew:
+def build_crew(question: str, order_id: Optional[str], policy: bool = True) -> Crew:
     llm = get_llm()
     retrieval = make_agent(
         "Retrieval Agent", "Find the policy passages that answer the customer's question.",
@@ -37,7 +37,7 @@ def build_crew(question: str, order_id: Optional[str]) -> Crew:
         "You write the final customer answer using only what the other agents found.", [], llm)
 
     t_retrieve = Task(
-        description=f"Search the Nykaa policy knowledge base with the rag_lookup tool.\nUSER_QUESTION: {question} END_QUESTION",
+        description=f"Search the Nykaa policy knowledge base with the rag_lookup tool.\nUSER_QUESTION: {question if policy else NO_POLICY_QUESTION} END_QUESTION",
         expected_output="The tool's JSON result.", agent=retrieval)
     t_lookup = Task(
         description=f"If an order id is given, call the check_order_status tool.\nORDER_ID: {order_id or 'NONE'}",
@@ -52,9 +52,9 @@ def build_crew(question: str, order_id: Optional[str]) -> Crew:
                 process=Process.sequential, verbose=False)
 
 
-def run_crew(question: str, order_id: Optional[str] = None) -> CrewAnswer:
+def run_crew(question: str, order_id: Optional[str] = None, policy: bool = True) -> CrewAnswer:
     """kickoff() the crew and validate the response against the CrewAnswer Pydantic schema."""
-    result = build_crew(question, order_id).kickoff()
+    result = build_crew(question, order_id, policy).kickoff()
     raw = getattr(result, "raw", None) or str(result)
     pyd = getattr(result, "pydantic", None)
     if isinstance(pyd, CrewAnswer):

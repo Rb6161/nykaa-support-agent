@@ -84,13 +84,14 @@ def check_order_status(record_id: str) -> dict:
 
 
 def order_sentence(info: dict) -> str:
-    """One human-readable sentence about an order. The SAME sentence is added to the review
-    context, so the reviewer treats it as grounded."""
-    verdict = "escalation is recommended" if info["escalation_recommended"] else "no escalation is needed right now"
-    return (
-        f"Order {info['record_id']} is currently {info['status']}, with an order value of INR "
-        f"{info['order_value_inr']}; its escalation score is {info['escalation_score']:.2f}, so {verdict}."
-    )
+    """One customer-facing sentence about an order. Escalation score and threshold are internal and are
+    never shown to the customer. The SAME sentence is added to the review context (so it counts as grounded)."""
+    s = f"Order {info['record_id']} is currently {info['status']}, with an order value of INR {info['order_value_inr']}."
+    if info.get("delayed_shipment"):
+        s += " The shipment is running late."
+    if info.get("escalation_recommended"):
+        s += " I have also flagged it to our support team for a closer look."
+    return s
 
 
 if __name__ == "__main__":

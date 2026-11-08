@@ -1,7 +1,7 @@
 {
   "fixed": {
-    "threshold": 0.3524,
-    "heldout_mean_precision": 0.49652777777777773,
+    "threshold": 0.368,
+    "heldout_mean_precision": 0.5069444444444444,
     "heldout_mean_recall": 1.0,
     "heldout_wrongly_refused": 3,
     "problem_queries": [
@@ -18,7 +18,7 @@
       {
         "threshold": 0.15,
         "false_refusal_rate": 0.0,
-        "false_answer_rate": 0.6875
+        "false_answer_rate": 0.875
       },
       {
         "threshold": 0.2,
@@ -38,7 +38,7 @@
       {
         "threshold": 0.35,
         "false_refusal_rate": 0.0,
-        "false_answer_rate": 0.1875
+        "false_answer_rate": 0.25
       },
       {
         "threshold": 0.4,
@@ -78,14 +78,14 @@
     ],
     "false_answers_at_threshold": [
       "What is Amazon's return policy?",
-      "How do I return a library book?",
+      "how do I track a flight status",
       "what is the refund policy for flight tickets"
     ],
     "false_refusals_at_threshold": []
   },
   "sentence": {
     "threshold": 0.3968,
-    "heldout_mean_precision": 0.5277777777777778,
+    "heldout_mean_precision": 0.576388888888889,
     "heldout_mean_recall": 0.9583333333333334,
     "heldout_wrongly_refused": 3,
     "problem_queries": [
@@ -109,7 +109,7 @@
       {
         "threshold": 0.2,
         "false_refusal_rate": 0.0,
-        "false_answer_rate": 0.625
+        "false_answer_rate": 0.6875
       },
       {
         "threshold": 0.25,
@@ -124,12 +124,12 @@
       {
         "threshold": 0.35,
         "false_refusal_rate": 0.0,
-        "false_answer_rate": 0.1875
+        "false_answer_rate": 0.25
       },
       {
         "threshold": 0.4,
         "false_refusal_rate": 0.0,
-        "false_answer_rate": 0.125
+        "false_answer_rate": 0.1875
       },
       {
         "threshold": 0.45,
@@ -164,6 +164,7 @@
     ],
     "false_answers_at_threshold": [
       "What is Amazon's return policy?",
+      "how do I track a flight status",
       "what is the refund policy for flight tickets"
     ],
     "false_refusals_at_threshold": []

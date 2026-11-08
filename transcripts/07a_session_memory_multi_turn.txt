@@ -3,49 +3,50 @@ $ python.exe demo_memory.py multi
 ##### CONVERSATION A (session 'multi-turn'): the order id is given in turn 1 ONLY #####
 
 USER      : Hi, my order id is NYK-0005. Can you check it?
-ASSISTANT : Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so escalation is recommended. An order is created only after a payment succeeds, so a failed payment does not produce an order ID. The claim requires the order ID and clear details of the damage, and the packaging must be kept.
+ASSISTANT : Order NYK-0005 is currently Returned, with an order value of INR 4267. I have also flagged it to our support team for a closer look.
             (tools=['rag_lookup', 'check_order_status'], refused=False, reason=None)
 
 USER      : What is the status of my order?
-ASSISTANT : Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so escalation is recommended. Placed means the order is confirmed and is being packed, and it has not yet been handed to the courier. A shipment is considered delayed when it is more than 2 days past its promised delivery date, and the customer can then ask for a status check.
+ASSISTANT : Order NYK-0005 is currently Returned, with an order value of INR 4267. I have also flagged it to our support team for a closer look.
             (tools=['rag_lookup', 'check_order_status'], refused=False, reason=None)
 
 USER      : How long does a COD refund take?
-ASSISTANT : Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so escalation is recommended. Once the returned item passes quality check, the refund is released within 5 to 7 working days. Prepaid cancellations are refunded to the original payment method within 5 to 7 working days.
-            (tools=['rag_lookup', 'check_order_status'], refused=False, reason=None)
+ASSISTANT : Once the returned item passes quality check, the refund is released within 5 to 7 working days. If the bank details are wrong, the refund is held until the customer corrects them.
+            (tools=['rag_lookup'], refused=False, reason=None)
 
 USER      : Should it be escalated?
-ASSISTANT : Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so escalation is recommended.
+ASSISTANT : Order NYK-0005 is currently Returned, with an order value of INR 4267. I have also flagged it to our support team for a closer look.
             (tools=['rag_lookup', 'check_order_status'], refused=False, reason=None)
 
 stored history for session 'multi-turn':
    human: Hi, my order id is NYK-0005. Can you check it?
-   ai: Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so es
+   ai: Order NYK-0005 is currently Returned, with an order value of INR 4267. I have also flagged it to our suppo
    human: What is the status of my order?
-   ai: Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so es
+   ai: Order NYK-0005 is currently Returned, with an order value of INR 4267. I have also flagged it to our suppo
    human: How long does a COD refund take?
-   ai: Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so es
+   ai: Once the returned item passes quality check, the refund is released within 5 to 7 working days. If the ban
    human: Should it be escalated?
-   ai: Order NYK-0005 is currently Returned, with an order value of INR 4267; its escalation score is 0.39, so es
+   ai: Order NYK-0005 is currently Returned, with an order value of INR 4267. I have also flagged it to our suppo
 
 OK: state (the order id) was carried across turns.
 
 --- stderr (warnings are expected, e.g. LangChain deprecation) ---
-token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+/oss/python/langchain/short-term-memory
+  return self._histories.setdefault(session_id, InMemoryChatMessageHistory())
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
 
 Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
-Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4237.92it/s]
-Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
-Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
-Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
-Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
-Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
-Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
-Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
-Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
-Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
-Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
-Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3223.02it/s]
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.

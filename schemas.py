@@ -17,6 +17,16 @@ class OrderInfo(BaseModel):
     days_since_created: Optional[int] = None
 
 
+class PublicOrder(BaseModel):
+    """What the customer-facing API returns about an order (escalation score/flag stay internal)."""
+    record_id: str
+    status: str
+    order_value_inr: int
+    category: Optional[str] = None
+    delayed_shipment: Optional[bool] = None
+    days_since_created: Optional[int] = None
+
+
 class CrewAnswer(BaseModel):
     """Every crew response must conform to this schema (validated in code after kickoff)."""
 
@@ -52,7 +62,7 @@ class AskResponse(BaseModel):
     refusal_reason: Optional[str] = None
     pii_masked: List[str] = Field(default_factory=list)
     tools_used: List[str] = Field(default_factory=list)
-    order: Optional[OrderInfo] = None
+    order: Optional[PublicOrder] = None
     review: Optional[Verdict] = None
     cache_hit: bool = False
     estimated_tokens: int = 0

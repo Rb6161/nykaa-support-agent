@@ -12,6 +12,7 @@ from pathlib import Path
 from guardrails import contains_raw_pii, mask_text
 
 LOG_PATH = Path(__file__).parent / "logs" / "requests.jsonl"
+ESCALATION_PATH = Path(__file__).parent / "logs" / "escalations.jsonl"   # hand-off queue read by backend support engineers
 _lock = threading.Lock()
 
 
@@ -47,3 +48,9 @@ def scan_log_for_raw_pii(path: Path = None) -> list:
         if contains_raw_pii(line):
             bad.append((i, line))
     return bad
+
+
+def log_escalation(trace_id: str, session_id: str, reason: str, masked_query: str, path: Path = None) -> dict:
+    """Queue a case for the backend support engineers (human review). Same masking as every other log."""
+    return log_request({"trace_id": trace_id, "session_id": session_id, "escalated_to": "backend_support_engineers",
+                        "reason": reason, "query": masked_query, "status": "open"}, path or ESCALATION_PATH)
