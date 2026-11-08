@@ -48,7 +48,7 @@ def main() -> int:
     server_log = open(tempfile.gettempdir() + os.sep + "nykaa_real_server_output.txt", "w", encoding="utf-8")
     server = subprocess.Popen([sys.executable, "-m", "uvicorn", "app:app", "--port", str(PORT), "--log-level", "warning"],
                               cwd=ROOT, env=env, stdout=server_log, stderr=subprocess.STDOUT, text=True)   # a FILE: an unread pipe fills up and freezes the server
-    added_file = ROOT / "kb" / "added_real_test_voucher_policy.md"
+    added_file = ROOT / "policy_docs" / "added_real_test_voucher_policy.md"
     try:
         # ---- wait for the server (model load + indexing can take a while)
         up = False

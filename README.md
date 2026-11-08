@@ -53,7 +53,7 @@ uvicorn app:app --port 8000            # start the API (after run_all.py has cal
 | file | what it does |
 |---|---|
 | `dataset.py` | seeded generator, `ORDERS` (240 records), validation report |
-| `kb/*.md` | 14 knowledge-base documents (3-4 sentences each) covering all 12 required topics, plus order-status meanings and invoices/gift packaging |
+| `policy_docs/*.md` | 14 knowledge-base documents (up to 5 sentences each) covering all 12 required topics, plus order-status meanings and invoices/gift packaging |
 | `rag.py` | fixed-size-with-overlap and sentence chunking, SentenceTransformers embeddings, **two separate ChromaDB collections** (`upsert`), calibrated threshold, grounded generation, cached entry point |
 | `calibrate.py` | measures top-1 similarities and sets the "I don't know" threshold |
 | `eval_chunking.py` | document-level precision/recall for both collections with per-query arithmetic + recommendation |
@@ -79,7 +79,7 @@ uvicorn app:app --port 8000            # start the API (after run_all.py has cal
 
 **Part 1**
 1. *Dataset* - `dataset.py` (section 1).
-2. *Knowledge base* - `kb/` (14 docs, each topic covered once or more).
+2. *Knowledge base* - `policy_docs/` (14 docs, each topic covered once or more).
 3. *Two chunking strategies* - fixed windows of 35 words with 10-word overlap, and one chunk per sentence; embedded with `all-MiniLM-L6-v2` and upserted into **separate** collections `nykaa_fixed_chunks` and `nykaa_sentence_chunks` (cosine space).
 4. *Grounded generation* - retrieves top-4 chunks and answers **only** from them; if the top-1 cosine similarity is below the calibrated threshold it returns the "I don't know" fallback. The threshold is measured by `calibrate.py` (>= 3 in-scope and >= 2 out-of-scope queries) and set midway between the observed clusters; no 0.5/0.6/0.7 presets. Measured values are in section 7. `demo_rag.py` runs 25 in-scope queries and 1 out-of-scope query that triggers the fallback.
 5. *Chunking comparison* - `eval_chunking.py`: chunks are mapped to parent documents and deduplicated before scoring; per-query arithmetic is printed for both collections, followed by the recommendation (section 7).
@@ -160,7 +160,7 @@ Per-query scores: `transcripts/09_evaluation_15_queries.txt`.
 
 ### Cache evidence (Task 16)
 
-First call 43.34 ms (generation calls 1); repeated query 0.42 ms with generation calls still 1.
+First call 37.72 ms (generation calls 1); repeated query 0.39 ms with generation calls still 1.
 
 <!-- RESULTS:END -->
 

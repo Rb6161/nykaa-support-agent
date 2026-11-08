@@ -14,8 +14,8 @@
     "oversized_tokens": 5100
   },
   "cache": {
-    "first_ms": 43.34,
-    "second_ms": 0.42,
+    "first_ms": 37.72,
+    "second_ms": 0.39,
     "counters_after_first": {
       "generation_calls": 1,
       "retrieval_calls": 1

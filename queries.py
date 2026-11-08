@@ -1,5 +1,5 @@
 """Query sets used by calibration, the chunking comparison, the RAG demo and the evaluation.
-Gold documents are KB file stems (see kb/)."""
+Gold documents are KB file stems (see policy_docs/)."""
 
 # 25 in-scope queries -> set of relevant parent documents
 IN_SCOPE_25 = [

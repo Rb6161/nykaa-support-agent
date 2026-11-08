@@ -18,7 +18,7 @@ import rag
 from crew import run_crew
 from governance import BudgetExceeded, enforce_budget
 from guardrails import check_grounded, detect_injection, mask_pii, strip_mask_tokens
-from logger import log_escalation, log_request
+from logger import log_escalation, log_request, new_trace_id
 from memory import ConversationMemory
 from review import review
 from schemas import AskResponse, CrewAnswer, OrderInfo, PublicOrder, Verdict
@@ -106,7 +106,7 @@ class SupportPipeline:
 
     # ------------------------------------------------------------------ public API
     def ask(self, query: str, session_id: Optional[str] = None, endpoint: str = "/ask") -> AskResponse:
-        trace_id = uuid.uuid4().hex[:12]
+        trace_id = new_trace_id()
         session_id = session_id or uuid.uuid4().hex[:8]
         t0 = time.perf_counter()
         masked, pii = mask_pii(query)                        # the model, memory and logs only ever see `masked`

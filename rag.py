@@ -17,7 +17,7 @@ from cache import ResponseCache
 from textutil import IDK_MESSAGE, split_sentences, uncovered_terms
 
 ROOT = Path(__file__).parent
-KB_DIR = ROOT / "kb"
+POLICY_DIR = ROOT / "policy_docs"      # the policy knowledge-base documents
 CHROMA_DIR = ROOT / ".chroma"
 CALIBRATION_PATH = ROOT / "calibration.json"
 RECOMMENDATION_PATH = ROOT / "recommendation.json"
@@ -35,7 +35,7 @@ CACHE = ResponseCache()
 # --------------------------------------------------------------------------- documents & chunking
 def load_documents() -> List[dict]:
     docs = []
-    for p in sorted(KB_DIR.glob("*.md")):
+    for p in sorted(POLICY_DIR.glob("*.md")):
         raw = p.read_text(encoding="utf-8").strip().splitlines()
         title = raw[0].lstrip("# ").strip()
         body = " ".join(l.strip() for l in raw[1:] if l.strip())
@@ -145,7 +145,7 @@ class RAGEngine:
         doc_id = f"added_{slug}"
         doc = {"doc_id": doc_id, "title": title.strip(), "text": f"{title.strip()}. {' '.join(text.split())}"}
         with self._lock:
-            (KB_DIR / f"{doc_id}.md").write_text(f"# {doc['title']}\n\n{' '.join(text.split())}\n", encoding="utf-8")
+            (POLICY_DIR / f"{doc_id}.md").write_text(f"# {doc['title']}\n\n{' '.join(text.split())}\n", encoding="utf-8")
             self.docs = [d for d in self.docs if d["doc_id"] != doc_id] + [doc]
             self.titles.add(doc["title"].lower())
             n = {}

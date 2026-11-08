@@ -21,7 +21,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
 
 import rag
-from logger import log_request
+from logger import new_trace_id, log_request
 from pipeline import SupportPipeline
 from schemas import AddDocumentRequest, AddDocumentResponse, AskRequest, AskResponse
 
@@ -51,7 +51,7 @@ async def log_remaining_requests(request: Request, call_next):
     response = await call_next(request)
     own_entry = request.url.path in ("/ask", "/add-document") and response.status_code != 422
     if not own_entry:
-        log_request({"trace_id": uuid.uuid4().hex[:12], "endpoint": request.url.path, "method": request.method,
+        log_request({"trace_id": new_trace_id(), "endpoint": request.url.path, "method": request.method,
                      "status_code": response.status_code, "latency_ms": round((time.perf_counter() - t0) * 1000, 2)})
     return response
 
@@ -71,7 +71,7 @@ async def ask(req: AskRequest):
 
 @app.post("/add-document", response_model=AddDocumentResponse)
 async def add_document(req: AddDocumentRequest):
-    trace_id, t0 = uuid.uuid4().hex[:12], time.perf_counter()
+    trace_id, t0 = new_trace_id(), time.perf_counter()
     info = await asyncio.to_thread(rag.get_engine().add_document, req.title, req.text)
     log_request({"trace_id": trace_id, "endpoint": "/add-document", "query": f"{req.title}: {req.text}",
                  "latency_ms": round((time.perf_counter() - t0) * 1000, 2), **info})
@@ -92,10 +92,10 @@ async def ws_chat(ws: WebSocket):
             resp = await asyncio.to_thread(pipeline.ask, query, session_id, "/ws/chat")
             await ws.send_json(resp.model_dump(mode="json"))
     except WebSocketDisconnect:
-        log_request({"trace_id": uuid.uuid4().hex[:12], "endpoint": "/ws/chat", "session_id": session_id,
+        log_request({"trace_id": new_trace_id(), "endpoint": "/ws/chat", "session_id": session_id,
                      "event": "client_disconnected"})
     except Exception as e:  # never let one client's failure kill the server
-        log_request({"trace_id": uuid.uuid4().hex[:12], "endpoint": "/ws/chat", "session_id": session_id,
+        log_request({"trace_id": new_trace_id(), "endpoint": "/ws/chat", "session_id": session_id,
                      "event": "error", "error": repr(e)})
         try:
             await ws.close(code=1011)

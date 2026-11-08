@@ -33,4 +33,4 @@ OK: the review stage approved query 1's draft unchanged and revised query 2's dr
 --- stderr (warnings are expected, e.g. LangChain deprecation) ---
 
 Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
-Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3574.52it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4252.77it/s]

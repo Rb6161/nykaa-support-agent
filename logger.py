@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import json
 import threading
+import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -14,6 +15,15 @@ from guardrails import contains_raw_pii, mask_text
 LOG_PATH = Path(__file__).parent / "logs" / "requests.jsonl"
 ESCALATION_PATH = Path(__file__).parent / "logs" / "escalations.jsonl"   # hand-off queue read by backend support engineers
 _lock = threading.Lock()
+
+
+def new_trace_id() -> str:
+    """12 hex chars, unique per request. Two positions are forced to be letters so an id can never contain a
+    long digit run that the PII masker would mistake for a phone/card number and rewrite in the log."""
+    h = list(uuid.uuid4().hex[:12])
+    for i in (3, 7):
+        h[i] = "abcdef"[int(h[i], 16) % 6]
+    return "".join(h)
 
 
 def _mask_obj(obj):

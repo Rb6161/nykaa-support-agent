@@ -116,3 +116,11 @@ def test_sensitive_card_words_detected_but_not_pin_code():
     assert SENSITIVE_CARD_RE.search("my CVV is 123") and SENSITIVE_CARD_RE.search("card expiry 12/27")
     assert SENSITIVE_CARD_RE.search("my ATM PIN is 1234")
     assert not SENSITIVE_CARD_RE.search("does delivery reach my pin code?")
+
+
+def test_trace_ids_are_never_altered_by_the_log_masker():
+    from guardrails import mask_text
+    from logger import new_trace_id
+    ids = [new_trace_id() for _ in range(5000)]
+    assert len(set(ids)) == len(ids)
+    assert all(mask_text(i) == i and len(i) == 12 for i in ids)

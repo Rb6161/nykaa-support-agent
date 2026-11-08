@@ -52,7 +52,7 @@ if __name__ == "__main__":
             ws2.send_text("What does the Delivered status mean?")
             print("client 2 reply:", ws2.receive_json()["answer"])
 
-    added = rag.KB_DIR / "added_gift_card_policy.md"      # demo artefact: remove so reruns start from the original KB
+    added = rag.POLICY_DIR / "added_gift_card_policy.md"      # demo artefact: remove so reruns start from the original KB
     if added.exists():
         added.unlink()
 
