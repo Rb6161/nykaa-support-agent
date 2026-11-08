@@ -46,7 +46,7 @@ Using an approximate input token count for model 'mock-llm': assuming one token 
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
 
 Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
-Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3903.37it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3114.10it/s]
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.

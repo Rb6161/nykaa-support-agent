@@ -19,13 +19,13 @@ budget detail: {'estimated_tokens': 702, 'cap': 1000, 'estimated_cost_usd': 0.00
 
 ##### RUNTIME LAYER: response cache (keyed by normalised query text) #####
 BEFORE: counters = {'generation_calls': 0, 'retrieval_calls': 0} | cache = {'hits': 0, 'misses': 0, 'entries': 0}
-CALL 1 (37.7 ms): cache_hit=False | counters = {'generation_calls': 1, 'retrieval_calls': 1} | cache = {'hits': 0, 'misses': 1, 'entries': 1}
+CALL 1 (33.4 ms): cache_hit=False | counters = {'generation_calls': 1, 'retrieval_calls': 1} | cache = {'hits': 0, 'misses': 1, 'entries': 1}
 CALL 2 (0.4 ms): cache_hit=True | counters = {'generation_calls': 1, 'retrieval_calls': 1} | cache = {'hits': 1, 'misses': 1, 'entries': 1}
-AFTER: the repeated (normalised-identical) query caused 0 extra generation calls and 0 extra retrievals; 37.7 ms -> 0.4 ms
+AFTER: the repeated (normalised-identical) query caused 0 extra generation calls and 0 extra retrievals; 33.4 ms -> 0.4 ms
 
 -- same effect end to end through the crew (tool-level cache hit) --
-request 1: cache_hit=False, latency=215.48 ms
-request 2: cache_hit=True, latency=162.17 ms
+request 1: cache_hit=False, latency=218.5 ms
+request 2: cache_hit=True, latency=166.76 ms
 
 OK: least autonomy enforced, risk classified, oversized request rejected, cache hit demonstrated.
 
@@ -37,7 +37,7 @@ OK: least autonomy enforced, risk classified, oversized request rejected, cache 
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
 
 Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
-Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4552.54it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4160.66it/s]
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.

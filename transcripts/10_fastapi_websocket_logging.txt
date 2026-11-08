@@ -3,7 +3,7 @@ $ python.exe demo_api.py
 GET /health -> {'status': 'ok', 'mock_llm': True, 'strategy': 'sentence'}
 
 POST /ask -> 200 {
-  "trace_id": "7e3b9edd6c9e",
+  "trace_id": "4d8f222bcf91",
   "answer": "Once the returned item passes quality check, the refund is released within 5 to 7 working days. If the bank details are wrong, the refund is held until the customer corrects them.",
   "sources": [
     "02_cod_refund",
@@ -15,10 +15,10 @@ POST /ask -> 200 {
 
 POST /ask (with phone number) -> 200 pii_masked = ['phone'] | answer: Order NYK-0003 is currently Placed, with an order value of INR 4724.
 
-POST /ask (oversized) -> 413 {'detail': {'error': 'request exceeds token budget', 'trace_id': '1f6d52fdaafb'}}
+POST /ask (oversized) -> 413 {'detail': {'error': 'request exceeds token budget', 'trace_id': 'b72a989de335'}}
 POST /ask (invalid body) -> 422 (Pydantic validation)
 
-POST /add-document -> 200 {'trace_id': 'bcade8ae1550', 'doc_id': 'added_gift_card_policy', 'chunks_fixed': 1, 'chunks_sentence': 3}
+POST /add-document -> 200 {'trace_id': '7f5ca78bc41e', 'doc_id': 'added_gift_card_policy', 'chunks_fixed': 1, 'chunks_sentence': 3}
 ask about the new document -> Gift cards are valid for 12 months from the date of purchase. | sources: ['added_gift_card_policy', '14_gift_wrap_and_invoice']
 
 --- WebSocket /ws/chat: client 1 chats, then disconnects mid-conversation ---
@@ -30,9 +30,9 @@ GET /health -> {'status': 'ok', 'mock_llm': True, 'strategy': 'sentence'}
 client 2 reply: Delivered means the parcel reached the address, and the return window starts from that date. A delayed shipment keeps its current status, and the customer can ask for a status check.
 
 --- JSONL log: 13 new entries (one per request), each with trace_id + timing ---
-{"ts": "2026-11-08T13:21:19.210628+00:00", "trace_id": "802a928ca74c", "endpoint": "/health", "method": "GET", "status_code": 200, "latency_ms": 1.83}
-{"ts": "2026-11-08T13:21:19.442388+00:00", "trace_id": "7e3b9edd6c9e", "endpoint": "/ask", "session_id": "api-1", "query": "How long does a COD refund take?", "pii_masked": [], "refused": false, "refusal_reason": null, "grounded": true, "tools_used": ["rag_lookup"], "cache_hit": false, "estimated_tokens": 708, "latency_ms": 227.93, "crew_ms": 212.84, "review_ms": 6.84}
-{"ts": "2026-11-08T13:21:19.611309+00:00", "trace_id": "2fbd442e8762", "endpoint": "/ask", "session_id": "api-2", "query": "My phone is [PHONE_MASKED]. What is the status of order NYK-0003?", "pii_masked": ["phone"], "refused": false, "refusal_reason": null, "grounded": true, "tools_used": ["rag_lookup", "check_order_status"], "cache_hit": false, "estimated_tokens": 717, "latency_ms": 164.86, "crew_ms": 155.82, "review_ms": 5.8, "order_id": "NYK-0003", "escalation_score": 0.08, "escalation_recommended": false}
+{"ts": "2026-11-08T17:54:58.016929+00:00", "trace_id": "f48a590ad341", "endpoint": "/health", "method": "GET", "status_code": 200, "latency_ms": 1.83}
+{"ts": "2026-11-08T17:54:58.254314+00:00", "trace_id": "4d8f222bcf91", "endpoint": "/ask", "session_id": "api-1", "query": "How long does a COD refund take?", "pii_masked": [], "refused": false, "refusal_reason": null, "grounded": true, "tools_used": ["rag_lookup"], "cache_hit": false, "estimated_tokens": 708, "latency_ms": 233.88, "crew_ms": 218.71, "review_ms": 6.76}
+{"ts": "2026-11-08T17:54:58.419996+00:00", "trace_id": "2a3dae1fca27", "endpoint": "/ask", "session_id": "api-2", "query": "My phone is [PHONE_MASKED]. What is the status of order NYK-0003?", "pii_masked": ["phone"], "refused": false, "refusal_reason": null, "grounded": true, "tools_used": ["rag_lookup", "check_order_status"], "cache_hit": false, "estimated_tokens": 717, "latency_ms": 161.95, "crew_ms": 153.16, "review_ms": 5.85, "order_id": "NYK-0003", "escalation_score": 0.08, "escalation_recommended": false}
 
 OK: no raw phone/card digits anywhere in the log file; server survived the disconnect.
 

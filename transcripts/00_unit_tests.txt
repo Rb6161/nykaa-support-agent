@@ -1,4 +1,4 @@
 $ python.exe -m pytest -q tests
 
 ....................                                                     [100%]
-20 passed in 2.55s
+20 passed in 2.67s

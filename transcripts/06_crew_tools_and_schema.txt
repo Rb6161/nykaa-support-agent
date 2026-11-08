@@ -108,7 +108,7 @@ OK: both tools were invoked on different queries and every response validated ag
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
 
 Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
-Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4065.47it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3595.86it/s]
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.
 Using an approximate input token count for model 'mock-llm': assuming one token per four characters because a native token count is unavailable.

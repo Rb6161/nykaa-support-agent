@@ -160,7 +160,7 @@ Per-query scores: `transcripts/09_evaluation_15_queries.txt`.
 
 ### Cache evidence (Task 16)
 
-First call 37.72 ms (generation calls 1); repeated query 0.39 ms with generation calls still 1.
+First call 33.41 ms (generation calls 1); repeated query 0.4 ms with generation calls still 1.
 
 <!-- RESULTS:END -->
 
